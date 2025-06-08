@@ -1,0 +1,3 @@
+jwt:
+  secret: 3a6257231361f6945f931e8e08cda3f1fc1473c80cd078e390efa5eee3beb964
+  expiration: 86400 # 24 hours in seconds

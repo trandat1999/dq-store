@@ -1,0 +1,21 @@
+<nz-row>
+  <nz-col [nzSpan]="24">
+    <nz-space>
+      <button *nzSpaceItem nz-button (click)="createMessage('success')">Success</button>
+      <button *nzSpaceItem nz-button (click)="createMessage('error')">Error</button>
+      <button *nzSpaceItem nz-button (click)="createMessage('warning')">Warning</button>
+      <button *nzSpaceItem nz-button (click)="createMessage('info')">Info</button>
+    </nz-space>
+  </nz-col>
+  <nz-col [nzSpan]="24">
+    <nz-space>
+      <button *nzSpaceItem nz-button (click)="createNotification('success')">Success</button>
+      <button *nzSpaceItem nz-button (click)="createNotification('error')">Error</button>
+      <button *nzSpaceItem nz-button (click)="createNotification('warning')">Warning</button>
+      <button *nzSpaceItem nz-button (click)="createNotification('info')">Info</button>
+    </nz-space>
+  </nz-col>
+</nz-row>
+
+
+

@@ -2,23 +2,22 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
-      <profile name="Maven default annotation processors profile" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="gateway-service" />
-        <module name="discovery-service" />
-      </profile>
-      <profile name="Annotation profile for product-service" enabled="true">
+      <profile name="Annotation profile for user-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="product-service" />
         <module name="base-service" />
         <module name="user-service" />
+      </profile>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="gateway-service" />
+        <module name="discovery-service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -27,7 +26,6 @@
       <module name="base-service" options="-parameters" />
       <module name="discovery-service" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
-      <module name="product-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
     </option>
   </component>

@@ -89,11 +89,25 @@
   padding: 0;
 }
 
-.ant-notification-notice-with-icon :has(.ant-notification-notice-icon-error) {
+.ant-notification-notice-with-icon{
+  padding: @message-notice-content-padding;
+  border-radius: @border-radius-base;
+}
+.ant-notification-notice-with-icon:has(.ant-notification-notice-icon-warning) {
+  background-color: @warning-bg !important;
+  border: 1px solid @warning-border;
+}
+.ant-notification-notice-with-icon:has(.ant-notification-notice-icon-error) {
+  background-color: @error-bg !important;
+  border: 1px solid @error-border;
+}
+.ant-notification-notice-with-icon:has(.ant-notification-notice-icon-success) {
   background-color: @success-bg !important;
   border: 1px solid @success-border;
-  border-radius: @border-radius-base;
-  padding: @message-notice-content-padding;
+}
+.ant-notification-notice-with-icon:has(.ant-notification-notice-icon-info) {
+  background-color: @info-bg !important;
+  border: 1px solid @info-border;
 }
 .ant-notification-notice-icon-info ~ .ant-notification-notice-message {
   color: @info-color;
@@ -110,4 +124,7 @@
 .ant-notification-notice-icon-warning ~ .ant-notification-notice-message {
   color: @warning-color;
   font-weight: @btn-font-weight;
+}
+.ant-form-horizontal .ant-form-item {
+  display: flex;
 }

@@ -37,4 +37,16 @@ public class ConstUtils {
     public static final String URI_LOGOUT = "/api/auth/logout";
     public static final String ADMIN_USERNAME_ROOT = "admin_root";
     public static final String ADMIN_PASSWORD_ROOT = "password_root";
+
+    public static final String[] WHITE_LIST_ROOT = {
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui/**",
+            "/webjars/**",
+            "/swagger-ui.html"};
 }

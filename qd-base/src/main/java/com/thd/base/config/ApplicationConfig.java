@@ -1,6 +1,7 @@
 package com.thd.base.config;
 
 import com.thd.base.entity.User;
+import com.thd.base.enums.UserEnum;
 import com.thd.base.repository.UserRepository;
 import com.thd.base.util.ConstUtils;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -53,17 +55,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 public class ApplicationConfig {
     @Value("${application.security.whitelist}")
     private String[] whiteList;
-    private static final String[] WHITE_LIST_ROOT = {
-            "/v2/api-docs",
-            "/v3/api-docs",
-            "/v3/api-docs/**",
-            "/swagger-resources",
-            "/swagger-resources/**",
-            "/configuration/ui",
-            "/configuration/security",
-            "/swagger-ui/**",
-            "/webjars/**",
-            "/swagger-ui.html"};
     private final UserDetailsService userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
@@ -71,21 +62,16 @@ public class ApplicationConfig {
     private final UserRepository userRepository;
 
     @Bean
-    public Optional<UUID> auditorAware() {
-        UUID rs = UUID.fromString(TEMP_UUID);
-        if (!ObjectUtils.isEmpty(SecurityContextHolder.getContext()) && !ObjectUtils.isEmpty(SecurityContextHolder.getContext().getAuthentication()) &&
-                SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-            User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            rs = user.getId();
-        }
-        return Optional.of(rs);
-    }
-
-    @Bean
-    public LocaleResolver localeResolver() {
-        AcceptHeaderLocaleResolver localeResolver = new AcceptHeaderLocaleResolver();
-        localeResolver.setDefaultLocale(Locale.ROOT);
-        return localeResolver;
+    public AuditorAware<UUID> auditorAware() {
+        return () -> {
+            UUID rs = UUID.fromString(TEMP_UUID);
+            if (!ObjectUtils.isEmpty(SecurityContextHolder.getContext()) && !ObjectUtils.isEmpty(SecurityContextHolder.getContext().getAuthentication()) &&
+                    SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
+                User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                rs = user.getId();
+            }
+            return Optional.of(rs);
+        };
     }
 
     @Bean(name = TASK_EXECUTOR_BEAN_NAME)
@@ -161,6 +147,7 @@ public class ApplicationConfig {
                     .enabled(true)
                     .password(passwordEncoder().encode(ADMIN_PASSWORD_ROOT))
                     .username(ADMIN_USERNAME_ROOT)
+                    .type(UserEnum.ROOT_USER)
                     .build();
             userRepository.save(user);
         }

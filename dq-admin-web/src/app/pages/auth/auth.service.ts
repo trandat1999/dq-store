@@ -6,7 +6,7 @@ import {AuthRequest, RegisterRequest} from '../../models/auth.model';
   providedIn: 'root'
 })
 export class AuthService {
-  private readonly apiUrl: string = "/api/v1/auth"
+  private readonly apiUrl: string = "/user-service/api/v1/auth"
   constructor(private base : BaseService) {
   }
   login(request:AuthRequest){

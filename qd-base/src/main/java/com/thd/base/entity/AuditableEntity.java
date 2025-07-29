@@ -13,6 +13,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
@@ -23,7 +24,7 @@ import java.util.Date;
 public abstract class AuditableEntity implements Serializable {
     @Column(name = "created_by", updatable = false)
     @CreatedBy
-    protected String createdBy;
+    protected UUID createdBy;
 
     @Column(name = "created_date", updatable = false)
     @CreatedDate
@@ -32,7 +33,7 @@ public abstract class AuditableEntity implements Serializable {
 
     @Column(name = "last_modified_by")
     @LastModifiedBy
-    protected String lastModifiedBy;
+    protected UUID lastModifiedBy;
 
     @Column(name = "last_modified_date")
     @LastModifiedDate

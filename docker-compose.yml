@@ -12,14 +12,14 @@ services:
       - postgres_data:/var/lib/postgresql/data
 
   user-service:
-    build: ./user-service
+    build: ./dq-user
     ports:
       - 8082:8080
     depends_on:
       - postgres
 
   gateway-service:
-    build: ./gateway-service
+    build: ./dq-gateway
     ports:
       - 8080:8080
     depends_on:
@@ -27,7 +27,7 @@ services:
       - discovery-service
 
   discovery-service:
-    build: ./discovery-service
+    build: ./dq-service
     ports:
       - 8761:8761
 

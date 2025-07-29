@@ -19,7 +19,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -38,10 +37,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final AccessTokenRepository accessTokenRepository;
     private final MessageSource messageSource;
     private final UserDetailsServiceImpl userDetailsService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String jwt = getJwtFromRequest(request);
-        if(StringUtils.hasText(jwt)){
+        if (StringUtils.hasText(jwt)) {
             try {
                 String username = jwtProvider.getUsernameFromToken(jwt);
                 if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -53,17 +53,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         SecurityContextHolder.getContext().setAuthentication(authToken);
                     }
                 }
-            }catch(Exception e){
+            } catch (Exception e) {
                 ObjectMapper mapper = new ObjectMapper();
                 BaseResponse errorDetail = BaseResponse.builder()
                         .build();
                 HttpStatus httpStatus = HttpStatus.UNAUTHORIZED;
                 log.error(e.getMessage());
                 if (e instanceof ExpiredJwtException) {
-                    errorDetail.setMessage(messageSource.getMessage(SystemMessage.JWT_IS_EXPIRED,null, LocaleContextHolder.getLocale()));
-                }else{
+                    errorDetail.setMessage(messageSource.getMessage(SystemMessage.JWT_IS_EXPIRED, null, LocaleContextHolder.getLocale()));
+                } else {
                     httpStatus = HttpStatus.BAD_REQUEST;
-                    errorDetail.setMessage(messageSource.getMessage(SystemMessage.JWT_IS_INVALID,null, LocaleContextHolder.getLocale()));
+                    errorDetail.setMessage(messageSource.getMessage(SystemMessage.JWT_IS_INVALID, null, LocaleContextHolder.getLocale()));
                 }
                 errorDetail.setStatus(httpStatus.value());
                 response.setStatus(httpStatus.value());

@@ -1,3 +1,26 @@
+spring:
+  application:
+    name: dq-user #trung với lb:// trong gateway
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    hikari:
+      maximum-pool-size: 20
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 123456
+    url: jdbc:postgresql://localhost:5432/dq-store
+  messages:
+    encoding: UTF-8
+    basename: i18n/messages
+server:
+  port: 8081
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
 jwt:
   secret: 3a6257231361f6945f931e8e08cda3f1fc1473c80cd078e390efa5eee3beb964
   expiration: 86400 # 24 hours in seconds

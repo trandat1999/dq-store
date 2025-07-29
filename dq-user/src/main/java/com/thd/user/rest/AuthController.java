@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @package com.thd.user.rest
  */
 @RestController
-@RequestMapping(name = "/api/v1/auth")
+@RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-    @LogActivity
+//    @LogActivity
     @PostMapping("/login")
     public BaseResponse login(@RequestBody LoginRequest request){
         return authService.login(request);

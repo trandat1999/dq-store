@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -21,11 +22,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static com.thd.base.util.ConstUtils.*;
 
@@ -33,6 +38,8 @@ import static com.thd.base.util.ConstUtils.*;
 @RequiredArgsConstructor
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
+    @Value("${application.security.whitelist}")
+    private String[] whiteList;
     private final JwtService jwtProvider;
     private final AccessTokenRepository accessTokenRepository;
     private final MessageSource messageSource;
@@ -40,6 +47,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        List<String> combinedWhiteList = Stream.concat(Arrays.stream(WHITE_LIST_ROOT), Arrays.stream(whiteList)).toList();
+        AntPathMatcher pathMatcher = new AntPathMatcher();
+        String requestURI = request.getRequestURI();
+        for (String pattern : combinedWhiteList) {
+            if (pathMatcher.match(pattern, requestURI)) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+        }
         String jwt = getJwtFromRequest(request);
         if (StringUtils.hasText(jwt)) {
             try {

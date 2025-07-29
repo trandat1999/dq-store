@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
-@SpringBootApplication(scanBasePackages = {"com.thd.base"})
+@SpringBootApplication(scanBasePackages = {"com.thd.base","com.thd", "com.thd.user"})
 public class UserServiceApplication {
 
     public static void main(String[] args) {

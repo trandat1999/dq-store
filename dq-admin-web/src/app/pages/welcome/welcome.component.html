@@ -1,0 +1,35 @@
+<nz-row>
+  <nz-col [nzSpan]="24">
+    <nz-space>
+      <button *nzSpaceItem nz-button (click)="createMessage('success')">Success</button>
+      <button *nzSpaceItem nz-button (click)="createMessage('error')">Error</button>
+      <button *nzSpaceItem nz-button (click)="createMessage('warning')">Warning</button>
+      <button *nzSpaceItem nz-button (click)="createMessage('info')">Info</button>
+    </nz-space>
+  </nz-col>
+  <nz-col [nzSpan]="24">
+    <nz-space>
+      <button *nzSpaceItem nz-button (click)="createNotification('success')">Success</button>
+      <button *nzSpaceItem nz-button (click)="createNotification('error')">Error</button>
+      <button *nzSpaceItem nz-button (click)="createNotification('warning')">Warning</button>
+      <button *nzSpaceItem nz-button (click)="createNotification('info')">Info</button>
+    </nz-space>
+  </nz-col>
+</nz-row>
+<nz-row nz-form nzLayout="horizontal" [nzGutter]="8">
+  <dq-input [labelSpan]="6" [inputSpan]="18" label="text" nz-col nzSpan="6" [(ngModel)]="test.a" type="text" [isSearch]="true"></dq-input>
+  <dq-input [labelSpan]="6" [inputSpan]="18" label="date" nz-col nzSpan="6" [(ngModel)]="test.a" type="date"></dq-input>
+  <dq-input [labelSpan]="6" [inputSpan]="18" label="email" nz-col nzSpan="6" [(ngModel)]="test.a" type="email"></dq-input>
+  <dq-input [labelSpan]="6" [inputSpan]="18" label="number" nz-col nzSpan="6" [(ngModel)]="test.a" type="number" [addOnBefore]="customAddon"></dq-input>
+  <dq-input [labelSpan]="6" [inputSpan]="18" label="password" nz-col nzSpan="6" [(ngModel)]="test.a" type="password"></dq-input>
+  <dq-input [labelSpan]="6" [inputSpan]="18" label="select" nz-col nzSpan="6" [(ngModel)]="test.a" type="select" [items]="[1,2,3,4,5,6]"></dq-input>
+</nz-row>
+<ng-template #customAddon>
+  <nz-select [(ngModel)]="test.b" [style.width.px]="60">
+    <nz-option nzLabel="+" nzValue="add"></nz-option>
+    <nz-option nzLabel="-" nzValue="subtract"></nz-option>
+  </nz-select>
+</ng-template>
+
+
+

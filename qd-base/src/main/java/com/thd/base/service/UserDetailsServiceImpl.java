@@ -27,8 +27,7 @@ public class UserDetailsServiceImpl extends BaseService implements UserDetailsSe
     public void onApplicationEvent(AuthenticationSuccessEvent event) {
         String username = ((User) event.getAuthentication().getPrincipal()).getUsername();
         User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException(username));
-        user.setLastLogin(new Date());
-        userRepository.save(user);
+        userRepository.updateLastLoginUser(new Date(),user.getId());
     }
 
     @Override

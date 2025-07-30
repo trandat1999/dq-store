@@ -70,8 +70,13 @@ public class ApplicationConfig {
             UUID rs = UUID.fromString(TEMP_UUID);
             if (!ObjectUtils.isEmpty(SecurityContextHolder.getContext()) && !ObjectUtils.isEmpty(SecurityContextHolder.getContext().getAuthentication()) &&
                     SecurityContextHolder.getContext().getAuthentication().isAuthenticated()) {
-                User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-                rs = user.getId();
+                User user= null;
+                try {
+                    user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+                    rs = user.getId();
+                }catch (Exception e){
+                    log.error("AuditorAware: {}",SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+                }
             }
             return Optional.of(rs);
         };

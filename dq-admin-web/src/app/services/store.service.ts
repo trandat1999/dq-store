@@ -6,8 +6,8 @@ import {BaseService} from './base.service';
   providedIn: 'root'
 })
 export class StoreService {
-  readonly URL_API = "/api/v1/users/current"
-  private currentUser = new BehaviorSubject<any>({});
+  readonly URL_API = "/user-service/api/v1/users/current"
+  private currentUser = new BehaviorSubject<any>(null);
 
   public setCurrentUser(value: any) {
     this.currentUser.next(value);

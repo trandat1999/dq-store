@@ -2,6 +2,5 @@ export interface BaseResponse{
   timestamp?: string;
   body?: any;
   message?: string;
-  status?: string;
-  code?: number;
+  status?: number;
 }

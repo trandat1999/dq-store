@@ -53,7 +53,7 @@ function handle401Error(
         .pipe(
           switchMap((response) => {
             isRefreshing = false;
-            if (response.code === 200) {
+            if (response.status === 200) {
               const authResponse = response.body as AuthResponse;
               storageService.saveToken(authResponse);
               refreshTokenSubject.next(authResponse.accessToken);
